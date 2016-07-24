@@ -17,12 +17,13 @@ export class ShoppingCartListComponent implements OnInit {
   titleDelete: string="刪除";
   titleTax: string="稅金(5%)";
   titleTotal: string="總計金額";
+  undoList;
 
   constructor(public shoppingCartService:ShoppingCartService=null) {
   }
 
   ngOnInit() {
-    console.log(this.shoppingCartService.shoppingCarts);
+    // console.log(this.shoppingCartService.shoppingCarts);
   }
 
   calculatePrice(price,quantity){
@@ -47,12 +48,12 @@ export class ShoppingCartListComponent implements OnInit {
   }
 
   delete(i){
-    this.shoppingCartService.shoppingCarts.splice(i,1);
+    this.shoppingCartService.removeItem(i);
   }
 
 
   clear(){
-    this.shoppingCartService.shoppingCarts=[ ];
+    this.shoppingCartService.clearAll();
   }
 
   edit(shoppingCart){
@@ -67,5 +68,9 @@ export class ShoppingCartListComponent implements OnInit {
 
   cancelEdit(shoppingCart){
     shoppingCart.isEdit=false;
+  }
+
+  undo(){
+
   }
 }

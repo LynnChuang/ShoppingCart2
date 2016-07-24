@@ -6,8 +6,29 @@ import 'rxjs/add/operator/toPromise' ;
 @Injectable()
 export class ShoppingCartService {
 
-  public shoppingCarts: ShoppingCart[] = [
-      new ShoppingCart("BMW",2000,4,false)];
+  public undoList: Array<any>=new Array<any>();
+  public shoppingCarts: ShoppingCart[] = [];
 
-  constructor(public http: Http) {}
+  constructor(public http: Http) {
+  }
+
+  addItem(item){
+    this.storeItem();
+    this.shoppingCarts.push(item);
+  }
+
+  removeItem(i){
+    this.storeItem();
+    this.shoppingCarts.splice(i,1);
+  }
+
+  clearAll(){
+    this.storeItem();
+    this.shoppingCarts=[ ];
+  }
+
+  storeItem(){
+    this.undoList.push(this.shoppingCarts);
+    console.log(this.undoList);
+  }
 }
