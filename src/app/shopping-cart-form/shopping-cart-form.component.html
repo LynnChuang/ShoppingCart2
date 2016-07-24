@@ -1,0 +1,21 @@
+<hr>
+<div class="row">
+  <div class="col-md-3">
+    <form>
+      <div>
+         <label for="">產品名稱</label>
+         <input class="form-control" type="text" [(ngModel)]="name">
+      </div>
+      <div>
+         <label for="">產品價格</label>
+         <input class="form-control" type="text"  [(ngModel)]="price">
+      </div>
+      <div>
+        <label for="">購買數量</label>
+        <input class="form-control" type="text"  [(ngModel)]="quantity">
+      </div>
+      <p>{{name}} | ${{price}} * {{quantity}} = ${{calculate(price,quantity)}}</p>
+      <button class="btn btn-success" type="submit" (click)="onSubmit()">加入購物車</button>
+    </form>
+  </div>
+</div>
