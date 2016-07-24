@@ -31,6 +31,6 @@ export class ShoppingCartFormComponent implements OnInit {
 
   onSubmit(){
     this.shoppingCart=new ShoppingCart(this.name,this.price,this.quantity,false);
-    this.shoppingCartService.shoppingCarts.push(this.shoppingCart);
+    this.shoppingCartService.addItem(this.shoppingCart);
   }
 }
