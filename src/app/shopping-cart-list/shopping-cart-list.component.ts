@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ShoppingCartService } from '../shopping-cart.service/';
+import { ShoppingCart } from '../shopping-cart';
 
 @Component({
   moduleId: module.id,
@@ -23,14 +24,13 @@ export class ShoppingCartListComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log(this.shoppingCartService.shoppingCarts);
   }
 
-  calculatePrice(price,quantity){
+  calculatePrice(price: number,quantity: number): number{
     return price*quantity;
   }
 
-  calculateSub(){
+  calculateSub(): number{
     var subtotal = 0;
     for(var i=0;i<this.shoppingCartService.shoppingCarts.length;i++){
       subtotal+=this.calculatePrice(this.shoppingCartService.shoppingCarts[i].price,
@@ -39,15 +39,15 @@ export class ShoppingCartListComponent implements OnInit {
     return subtotal;
   }
 
-  calculateTax(){
-    return this.calculateSub()*0.05;
+  calculateTax(): number{
+    return Math.ceil(this.calculateSub()*0.05);
   }
 
-  calculateTotal(){
+  calculateTotal(): number{
     return this.calculateSub()+this.calculateTax();
   }
 
-  delete(i){
+  delete(i: number){
     this.shoppingCartService.removeItem(i);
   }
 
@@ -61,8 +61,10 @@ export class ShoppingCartListComponent implements OnInit {
     shoppingCart.isEdit=true;
   }
 
-  confirmEdit(shoppingCart){
-    shoppingCart.quantity=shoppingCart.quantity2;
+  confirmEdit(shoppingCart, i: number){
+    this.shoppingCartService.storeItem();
+    this.shoppingCartService.shoppingCarts[i] = new ShoppingCart(this.shoppingCartService.shoppingCarts[i].name,this.shoppingCartService.shoppingCarts[i].price,shoppingCart.quantity2)
+    // shoppingCart.quantity=shoppingCart.quantity2;
     shoppingCart.isEdit=false;
   }
 
@@ -71,6 +73,8 @@ export class ShoppingCartListComponent implements OnInit {
   }
 
   undo(){
-
+    if(this.shoppingCartService.undoList.length>=0){
+      this.shoppingCartService.shoppingCarts=this.shoppingCartService.undoList.pop();
+    }
   }
 }

@@ -12,12 +12,12 @@ export class ShoppingCartService {
   constructor(public http: Http) {
   }
 
-  addItem(item){
+  addItem(item: ShoppingCart){
     this.storeItem();
     this.shoppingCarts.push(item);
   }
 
-  removeItem(i){
+  removeItem(i: number){
     this.storeItem();
     this.shoppingCarts.splice(i,1);
   }
@@ -28,7 +28,8 @@ export class ShoppingCartService {
   }
 
   storeItem(){
-    this.undoList.push(this.shoppingCarts);
+    this.undoList.push([...this.shoppingCarts]);
+    console.log("undoList: ");
     console.log(this.undoList);
   }
 }
